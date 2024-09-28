@@ -23,16 +23,16 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.winnow.ui.theme.WINNOWTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //Establecer contendo para la actividad
-        //Resolver problema de "variable no esta siendo usada"
         setContent {
             WINNOWTheme {
                 val navController = rememberNavController()
@@ -46,6 +46,20 @@ class MainActivity : ComponentActivity() {
                     }
                     composable("crearCuenta") {
                         CrearCuentaScreen(navController = navController)
+                    }
+                    // Agregar la pantalla de detalle de subasta
+                    composable(
+                        "detalle_subasta/{titulo}/{descripcion}/{precio}",
+                        arguments = listOf(
+                            navArgument("titulo") { type = NavType.StringType },
+                            navArgument("descripcion") { type = NavType.StringType },
+                            navArgument("precio") { type = NavType.StringType }
+                        )
+                    ) { backStackEntry ->
+                        val titulo = backStackEntry.arguments?.getString("titulo") ?: ""
+                        val descripcion = backStackEntry.arguments?.getString("descripcion") ?: ""
+                        val precio = backStackEntry.arguments?.getString("precio") ?: ""
+                        DetalleSubasta(titulo, descripcion, precio)
                     }
                 }
             }
@@ -70,9 +84,10 @@ fun MainScreen(navController: NavHostController) {
         )
 
         // Mostrar lista en dos columnas
-        PDSubastaList(pdSubastaList, Modifier.padding(innerPadding))
+        PDSubastaList(pdSubastaList, navController, Modifier.padding(innerPadding))
     }
 }
+
 
 
 //Contenido de la barra de navegacion
@@ -137,7 +152,11 @@ data class PDsubasta(
 
 //Estructura de las PDSubastas
 @Composable
-fun PDSubastaList(pdSubastaList: List<PDsubasta>, modifier: Modifier = Modifier) {
+fun PDSubastaList(
+    pdSubastaList: List<PDsubasta>,
+    navController: NavHostController,
+    modifier: Modifier = Modifier
+) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -145,9 +164,12 @@ fun PDSubastaList(pdSubastaList: List<PDsubasta>, modifier: Modifier = Modifier)
     ) {
         // Mostrar en filas de 2 columnas
         items(pdSubastaList.chunked(2)) { pdSubastaRow ->
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
                 for (pdSubasta in pdSubastaRow) {
-                    PDSubastaItem(pdSubasta, Modifier.weight(1f))
+                    PDSubastaItem(pdSubasta, Modifier.weight(1f), navController)
                 }
                 // Si la fila tiene solo un elemento, llenamos el espacio vacío
                 if (pdSubastaRow.size == 1) {
@@ -161,7 +183,11 @@ fun PDSubastaList(pdSubastaList: List<PDsubasta>, modifier: Modifier = Modifier)
 
 //Contendo de las PDSubasta
 @Composable
-fun PDSubastaItem(pdSubasta: PDsubasta, modifier: Modifier = Modifier) {
+fun PDSubastaItem(
+    pdSubasta: PDsubasta,
+    modifier: Modifier = Modifier,
+    navController: NavHostController
+) {
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -179,14 +205,28 @@ fun PDSubastaItem(pdSubasta: PDsubasta, modifier: Modifier = Modifier) {
 
         // Título, descripción y precio
         Spacer(modifier = Modifier.height(8.dp))
-        Text(text = pdSubasta.titulo, style = MaterialTheme.typography.titleMedium, fontSize = 18.sp)
-        Text(text = pdSubasta.descripcion, style = MaterialTheme.typography.bodySmall)
-        Text(text = pdSubasta.precio, style = MaterialTheme.typography.bodyLarge, color = Color.Green)
+        Text(
+            text = pdSubasta.titulo,
+            style = MaterialTheme.typography.titleMedium,
+            fontSize = 18.sp
+        )
+        Text(
+            text = pdSubasta.descripcion,
+            style = MaterialTheme.typography.bodySmall
+        )
+        Text(
+            text = pdSubasta.precio,
+            style = MaterialTheme.typography.bodyLarge,
+            color = Color.Green
+        )
 
         // Botón debajo de la información del producto
         Spacer(modifier = Modifier.height(8.dp))
         Button(
-            onClick = { /* Acción al presionar el botón */ },
+            onClick = {
+                // Navegar a la pantalla de detalle de la subasta
+                navController.navigate("detalle_subasta/${pdSubasta.titulo}/${pdSubasta.descripcion}/${pdSubasta.precio}")
+            },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(text = "Pujar")
