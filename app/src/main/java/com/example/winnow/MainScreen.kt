@@ -27,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.winnow.vistas.PDsubasta
 
 @Composable
 fun MainScreen(navController: NavHostController) {

@@ -1,9 +1,10 @@
-package com.example.winnow.usuario.room
+package com.example.winnow.data.db.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import com.example.winnow.data.db.tablas.Usuarios
 
 @Dao
 interface UsuariosDao {

@@ -1,4 +1,4 @@
-package com.example.winnow.usuario.view
+package com.example.winnow
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.winnow.usuario.room.Usuarios
+import com.example.winnow.data.db.tablas.Usuarios
 
 @Composable
 fun UserProfileScreen(user: Usuarios, modifier: Modifier = Modifier) {

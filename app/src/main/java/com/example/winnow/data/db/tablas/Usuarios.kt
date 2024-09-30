@@ -1,4 +1,4 @@
-package com.example.winnow.usuario.room
+package com.example.winnow.data.db.tablas
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -25,6 +25,12 @@ data class Usuarios(
     val contrasenaUsu: String,
 
     @ColumnInfo(name = "telefono")
-    val telefonoUsu: String
+    val telefonoUsu: String,
+
+    @ColumnInfo(name = "foto_perfil")
+    val fotoUsu: String?, //para permitir que el campo sea opcional (puede ser null si no se ha asignado una foto de perfil).
+
+    @ColumnInfo(name = "fecha_registro")
+    val fechaRegistroUsu: java.util.Date = java.util.Date()
 )
 

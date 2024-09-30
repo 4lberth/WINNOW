@@ -1,11 +1,9 @@
-package com.example.winnow
+package com.example.winnow.data.db
 
-import androidx.databinding.adapters.Converters
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
-import com.example.winnow.usuario.room.Usuarios
-import com.example.winnow.usuario.room.UsuariosDao
+import com.example.winnow.data.db.tablas.Usuarios
+import com.example.winnow.data.db.dao.UsuariosDao
 
 @Database(
     entities = [Usuarios::class],
