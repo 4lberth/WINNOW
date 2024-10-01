@@ -30,7 +30,5 @@ data class Usuarios(
     @ColumnInfo(name = "foto_perfil")
     val fotoUsu: String?, //para permitir que el campo sea opcional (puede ser null si no se ha asignado una foto de perfil).
 
-    @ColumnInfo(name = "fecha_registro")
-    val fechaRegistroUsu: java.util.Date = java.util.Date()
 )
 
