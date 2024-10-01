@@ -8,7 +8,7 @@ import com.example.winnow.data.db.tablas.Notificaciones
 
 @Dao
 interface NotificacionesDao {
-    @Query("SELECT * FROM subastas")
+    @Query("SELECT * FROM notificaciones")
     suspend fun getAll(): List<Notificaciones>
 
     @Insert

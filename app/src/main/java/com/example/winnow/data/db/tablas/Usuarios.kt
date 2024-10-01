@@ -3,6 +3,7 @@ package com.example.winnow.data.db.tablas
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.Date
 
 @Entity(tableName = "usuarios") //tabla usuarios
 data class Usuarios(
@@ -29,6 +30,9 @@ data class Usuarios(
 
     @ColumnInfo(name = "foto_perfil")
     val fotoUsu: String?, //para permitir que el campo sea opcional (puede ser null si no se ha asignado una foto de perfil).
+
+    @ColumnInfo(name = "fecha_registro")
+    val fechaRegistroUsu: Date = Date() // Fecha de registro (por defecto, la actual)
 
 )
 

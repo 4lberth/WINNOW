@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import java.sql.Date
+import java.util.Date
 
 @Entity(//tabla subastas
     tableName = "subastas",
@@ -16,8 +16,8 @@ import java.sql.Date
     ),
     ForeignKey(
         entity = Categorias::class,
-        parentColumns = ["idCategoria"],
-        childColumns = ["idCategoria"],
+        parentColumns = ["idCat"],
+        childColumns = ["idCat"],
         onDelete = ForeignKey.SET_NULL)// Se pone en null si la categoría es eliminada
     ]
 )
