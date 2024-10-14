@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,8 +16,21 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -42,18 +56,35 @@ fun MainScreen(navController: NavHostController) {
     val sharedPreferences = context.getSharedPreferences("user_pref", Context.MODE_PRIVATE)
     val isRegistered = sharedPreferences.getBoolean("isRegistered", false)
 
-    // Si el usuario ya está registrado, navegar a su perfil
     if (isRegistered) {
-        navController.navigate("profile_screen") // Redirige al perfil
+        navController.navigate("profile_screen")
     }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            SearchBar(navController = navController) // Barra de búsqueda con logo y botón
-        }
+            SearchBar(navController = navController)
+        },
+        bottomBar = {
+            BottomNavigationBar(navController)
+        },
+        floatingActionButton = {
+            Spacer(modifier = Modifier.height(16.dp)) // Espacio adicional
+            FloatingActionButton(
+                onClick = { /* Acción del FAB */ },
+                shape = RoundedCornerShape(50),
+                containerColor = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.padding(bottom = 16.dp) // Espacio adicional
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Agregar",
+                    tint = Color.White
+                )
+            }
+        },
+        floatingActionButtonPosition = FabPosition.Center
     ) { innerPadding ->
-        // Simulando lista de datos de la subasta (PDsubasta)
         val pdSubastaList = listOf(
             PDsubasta("Producto 1", "Descripción del producto 1", "$100"),
             PDsubasta("Producto 2", "Descripción del producto 2", "$200"),
@@ -61,12 +92,9 @@ fun MainScreen(navController: NavHostController) {
             PDsubasta("Producto 4", "Descripción del producto 4", "$250")
         )
 
-        // Mostrar lista en dos columnas
         PDSubastaList(pdSubastaList, navController, Modifier.padding(innerPadding))
     }
 }
-
-
 
 //Contenido de la barra de navegacion
 @Composable
@@ -128,3 +156,36 @@ fun SearchBar(navController: NavHostController) {
         }
     }
 }
+
+@Composable
+fun BottomNavigationBar(navController: NavHostController) {
+    NavigationBar(
+        containerColor = MaterialTheme.colorScheme.primary // Usar el color primario definido en el tema
+    ) {
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
+            label = { Text("Home") },
+            selected = false,
+            onClick = { navController.navigate("main_screen") }
+        )
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.List, contentDescription = "Categories") },
+            label = { Text("Categorías") },
+            selected = false,
+            onClick = { /* Acción para categorías */ }
+        )
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.Favorite, contentDescription = "Favorites") },
+            label = { Text("Favoritos") },
+            selected = false,
+            onClick = { /* Acción para favoritos */ }
+        )
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
+            label = { Text("Perfil") },
+            selected = false,
+            onClick = { navController.navigate("profile_screen") }
+        )
+    }
+}
+
