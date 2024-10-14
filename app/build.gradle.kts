@@ -53,6 +53,10 @@ android {
 
 val room_version = "2.6.1"
 dependencies {
+    implementation("androidx.compose.animation:animation:1.3.0")
+    implementation("androidx.compose.ui:ui:1.3.0")
+    implementation("androidx.compose.ui:ui-tooling:1.3.0")
+    implementation("io.coil-kt:coil-compose:2.1.0")
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.databinding.adapters)
     implementation(libs.androidx.room.ktx)

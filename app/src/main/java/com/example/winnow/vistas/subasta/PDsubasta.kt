@@ -1,4 +1,4 @@
-package com.example.winnow
+package com.example.winnow.vistas.subasta
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -23,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.winnow.R
 import com.example.winnow.vistas.PDsubasta
 
 //Estructura de las PDSubastas

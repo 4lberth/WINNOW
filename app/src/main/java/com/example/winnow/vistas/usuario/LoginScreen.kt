@@ -1,4 +1,4 @@
-package com.example.winnow
+package com.example.winnow.vistas.usuario
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
